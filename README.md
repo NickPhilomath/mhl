@@ -11,7 +11,8 @@ This program allow the company to monitor their truck in order to be aware of hi
 ## Running the server
 
 - `docker run -d -p 6379:6379 redis`
-- `celery -A was worker --loglevel=info`
+- `celery -A core worker --loglevel=info`
+- `celery -A core beat`
 - `poetry run python manage.py runserver`
 
 
