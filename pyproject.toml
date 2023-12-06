@@ -17,6 +17,7 @@ pyowm = "^3.3.0"
 requests = "^2.31.0"
 celery = "^5.3.6"
 redis = "^5.0.1"
+django-redis = "^5.4.0"
 
 
 [build-system]

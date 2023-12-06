@@ -34,6 +34,7 @@ DEBUG = True
 BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.getenv('SECRET_KEY')
 SAMSARA_API_KEYS = get_list(os.getenv('SAMSARA_API_KEYS'))
+OWM_API_KEY = os.getenv('OWM_API_KEY')
 MYSQL_USER = os.getenv('MYSQL_USER')
 MYSQL_PASSWORD = os.getenv('MYSQL_PASSWORD')
 MYSQL_DATABASE_NAME = os.getenv('MYSQL_DATABASE_NAME')
@@ -186,32 +187,32 @@ INTERNAL_IPS = [
 CELERY_BROKER_URL = 'redis://127.0.0.1:6379/1' # /1
 
 CELERY_BEAT_SCHEDULE = {
-    'notifyCustomers': {
-        'task': 'api.tasks.notify_customers',
-        'schedule': 5, # every five seconds
-        # 'schedule': crontab(minute='*/15') # every 15 minutes
-        # 'schedule': crontab(day_of_week=1, hour=7, minute=30) # every monday at 7:30 am
-        'args': ['hello world'],
-    },
-    # 'updateTrailers': {
-    #     'task': 'api.tasks.update_trailers',
-    #     'schedule': 5,
+    # 'notifyCustomers': {
+    #     'task': 'api.tasks.notify_customers',
+    #     'schedule': 5, # every five seconds
+    #     # 'schedule': crontab(minute='*/15') # every 15 minutes
+    #     # 'schedule': crontab(day_of_week=1, hour=7, minute=30) # every monday at 7:30 am
+    #     'args': ['hello world'],
     # },
+    'update_trucks': {
+        'task': 'api.tasks.update_trucks',
+        'schedule': 5 * 60,
+    },
     # 'logTrailers': {
     #     'task': 'api.tasks.log_trailers',
     #     'schedule': 2 * 60
     # }
 }
 
-# CACHES = {
-#     "default": {
-#         "BACKEND": "django_redis.cache.RedisCache",
-#         "LOCATION": "redis://127.0.0.1:6379/2",
-#         "OPTIONS": {
-#             "CLIENT_CLASS": "django_redis.client.DefaultClient",
-#         }
-#     }
-# }
+CACHES = {
+    "default": {
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": "redis://127.0.0.1:6379/2",
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient",
+        }
+    }
+}
 
 # GRAPHENE = {
 #     "SCHEMA": "api.schema.schema"

@@ -5,8 +5,8 @@ load_dotenv()
 
 OWM_API_KEY = os.getenv('OWM_API_KEY')
 print(OWM_API_KEY)
-# https://tile.openweathermap.org/map/wind_new/0/0/0.png?appid=7d5374bbc8d7b695071107de9630c021
-# https://api.openweathermap.org/data/2.5/onecall?lat=33.44&lon=-94.04&exclude=hourly,daily&appid=7d5374bbc8d7b695071107de9630c021
+# https://tile.openweathermap.org/map/wind_new/0/0/0.png?appid=fak
+# https://api.openweathermap.org/data/2.5/onecall?lat=33.44&lon=-94.04&exclude=hourly,daily&appid=fak
 # ---------- FREE API KEY examples ---------------------
 
 owm = OWM(OWM_API_KEY)

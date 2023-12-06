@@ -4,6 +4,9 @@ from time import sleep
 from celery import shared_task
 from django.core.cache import cache
 from .models import Truck
+from .owm import get_weather
+
+from django.conf import settings
 # from logistics.celery import app
 
 # @app.task
@@ -14,6 +17,37 @@ def notify_customers(message):
     sleep(3)
     print('*** Emails were successfully sent!')
 
+
+SAMSARA_TRUCKS_URL = "https://api.samsara.com/fleet/vehicles/locations"
+
+def get_header(api_key):
+    return {
+        "accept": "application/json",
+        "authorization": f"Bearer {api_key}"
+    }
+
+@shared_task
+def update_trucks():
+    # response = [requests.get(SAMSARA_TRUCKS_URL, headers=get_header(key)).json()['data'] for key in settings.SAMSARA_API_KEYS]
+    # response = requests.get(SAMSARA_TRUCKS_URL, headers=SAMSARA_AUTH_HEADERS).json()
+    
+    # get all trucks from api
+    data = []
+    for key in settings.SAMSARA_API_KEYS:
+        response = requests.get(SAMSARA_TRUCKS_URL, headers=get_header(key)).json()
+        data = data + response['data']
+    
+    # check for new trucks and add them to database if exists
+    for d in data:
+        if not Truck.objects.filter(samsara_id = d['id']).exists():
+            Truck.create_from_data(d)
+
+        #  check weather in the location
+        loc = d['location']
+        d['weather'] = get_weather(loc['latitude'], loc['longitude'])
+
+
+    cache.set('trucks', data)
 
 # @shared_task
 # def update_trailers():
