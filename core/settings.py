@@ -172,11 +172,11 @@ SIMPLE_JWT = {
 # }
 
 # cors settings
-CORS_ALLOWED_ORIGINS  = [
-    "http://localhost:3000", # react host
-    "http://127.0.0.1:3000", # react host
-]
-# CORS_ALLOW_ALL_ORIGINS = True
+# CORS_ALLOWED_ORIGINS  = [
+#     "http://localhost:5173", # react host
+#     "http://127.0.0.1:5173", # react host
+# ]
+CORS_ALLOW_ALL_ORIGINS = True
 
 #debug toolbar settings
 INTERNAL_IPS = [

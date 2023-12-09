@@ -1,4 +1,5 @@
 # Weather alerting system for logistic companies
+
 This program allow the company to monitor their truck in order to be aware of high wind speed and other possible natural causes
 
 ## Setting up
@@ -7,15 +8,14 @@ This program allow the company to monitor their truck in order to be aware of hi
 - `pip install poetry`
 - `poetry install`
 
-
 ## Running the server
 
 - `docker run -d -p 6379:6379 redis`
 - `docker run -e MYSQL_ROOT_PASSWORD=pwd -d -p 3306:3306 mysql`
-- `celery -A core worker --loglevel=info`
-- `celery -A core beat`
+- `poetry run celery -A core worker --loglevel=info` (add `-P solo` in windows)
+- `poetry run celery -A core beat`
+- `poetry run celery -A core flower`
 - `poetry run python manage.py runserver`
-
 
 ## Todo
 
