@@ -9,45 +9,45 @@ from .owm import get_weather
 from django.conf import settings
 # from logistics.celery import app
 
+
 # @app.task
 @shared_task
 def notify_customers(message):
-    print('*** Sending 1000 messages....')
-    print('***', message)
+    print("*** Sending 1000 messages....")
+    print("***", message)
     sleep(3)
-    print('*** Emails were successfully sent!')
+    print("*** Emails were successfully sent!")
 
 
 SAMSARA_TRUCKS_URL = "https://api.samsara.com/fleet/vehicles/locations"
 
+
 def get_header(api_key):
-    return {
-        "accept": "application/json",
-        "authorization": f"Bearer {api_key}"
-    }
+    return {"accept": "application/json", "authorization": f"Bearer {api_key}"}
+
 
 @shared_task
 def update_trucks():
     # response = [requests.get(SAMSARA_TRUCKS_URL, headers=get_header(key)).json()['data'] for key in settings.SAMSARA_API_KEYS]
     # response = requests.get(SAMSARA_TRUCKS_URL, headers=SAMSARA_AUTH_HEADERS).json()
-    
+
     # get all trucks from api
     data = []
     for key in settings.SAMSARA_API_KEYS:
         response = requests.get(SAMSARA_TRUCKS_URL, headers=get_header(key)).json()
-        data = data + response['data']
-    
+        data = data + response["data"]
+
     # check for new trucks and add them to database if exists
     for d in data:
-        if not Truck.objects.filter(samsara_id = d['id']).exists():
+        if not Truck.objects.filter(samsara_id=d["id"]).exists():
             Truck.create_from_data(d)
 
         #  check weather in the location
-        loc = d['location']
-        d['weather'] = get_weather(loc['latitude'], loc['longitude'])
+        loc = d["location"]
+        d["weather"] = get_weather(loc["latitude"], loc["longitude"])
 
+    cache.set("trucks", data)
 
-    cache.set('trucks', data)
 
 # @shared_task
 # def update_trailers():
@@ -89,7 +89,7 @@ def update_trucks():
 #             new_trailer.samsara_id = trailer['samsara_id']
 #             new_trailer.status = 'ius'
 #             new_trailer.save()
-        
+
 #         data.append(trailer)
 
 #     cache.set('trailers', data)
@@ -106,12 +106,12 @@ def update_trucks():
 #                 status = 's'
 #             else:
 #                 status = 'm'
-            
+
 #             try:
 #                 latest_log = TrailerLog.objects.values('status').filter(trailer_id=d['id']).latest('time')
 #             except:
 #                 latest_log = {'status': 's'}
-                
+
 #             if not latest_log['status'] == status:
 #                 log = TrailerLog()
 #                 log.trailer_id = d['id']

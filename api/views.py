@@ -8,14 +8,17 @@ from rest_framework.permissions import IsAuthenticated, AllowAny
 from .tasks import notify_customers, update_trucks
 
 
-@api_view(['GET'])
+@api_view(["GET"])
 @permission_classes([AllowAny])
 def ping_pong(request):
     update_trucks()
-    return Response('pong!', status=status.HTTP_200_OK)
+    return Response("pong!", status=status.HTTP_200_OK)
 
 
-@api_view(['GET'])
+@api_view(["GET"])
 @permission_classes([AllowAny])
 def trucks(request):
-    return Response({'data': cache.get('trucks')}, status=status.HTTP_200_OK)
+    data = []
+    if cache.get("trucks"):
+        data = cache.get("trucks")
+    return Response(data, status=status.HTTP_200_OK)

@@ -17,6 +17,14 @@ This program allow the company to monitor their truck in order to be aware of hi
 - `poetry run celery -A core flower`
 - `poetry run python manage.py runserver`
 
+## Other commands
+
+- to stop running tasks in celery
+  `celery -A proj purge`
+  or
+  `from proj.celery import app`
+  `app.control.purge()`
+
 ## Todo
 
 - Test the Open Weather Map api and set up for development (DONE)
