@@ -11,12 +11,12 @@ from .tasks import notify_customers, update_trucks
 @api_view(["GET"])
 @permission_classes([AllowAny])
 def ping_pong(request):
-    update_trucks()
-    return Response("pong!", status=status.HTTP_200_OK)
+    # update_trucks()
+    return Response("pong", status=status.HTTP_200_OK)
 
 
 @api_view(["GET"])
-@permission_classes([AllowAny])
+@permission_classes([IsAuthenticated])
 def trucks(request):
     data = []
     if cache.get("trucks"):

@@ -160,8 +160,10 @@ SIMPLE_JWT = {
 # debug toolbar settings
 INTERNAL_IPS = ["127.0.0.1"]
 
+REDIS_BASE_URL = 'redis://localhost:6379'
+
 # # celery settings
-CELERY_BROKER_URL = "redis://redis:6379/1"  # /1
+CELERY_BROKER_URL = f"{REDIS_BASE_URL}/1"  # /1
 
 CELERY_BEAT_SCHEDULE = {
     # 'notifyCustomers': {
@@ -184,7 +186,7 @@ CELERY_BEAT_SCHEDULE = {
 CACHES = {
     "default": {
         "BACKEND": "django_redis.cache.RedisCache",
-        "LOCATION": "redis://redis:6379/2",
+        "LOCATION": f"{REDIS_BASE_URL}/2",
         "OPTIONS": {
             "CLIENT_CLASS": "django_redis.client.DefaultClient",
         },

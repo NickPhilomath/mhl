@@ -20,9 +20,9 @@ This program allow the company to monitor their truck in order to be aware of hi
 ## Other commands
 
 - to stop running tasks in celery
-  `celery -A proj purge`
+  `celery -A core purge`
   or
-  `from proj.celery import app`
+  `from core.celery import app`
   `app.control.purge()`
 
 ## Todo
