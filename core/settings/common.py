@@ -160,7 +160,7 @@ SIMPLE_JWT = {
 # debug toolbar settings
 INTERNAL_IPS = ["127.0.0.1"]
 
-REDIS_BASE_URL = 'redis://localhost:6379'
+REDIS_BASE_URL = 'redis://redis:6379'
 
 # # celery settings
 CELERY_BROKER_URL = f"{REDIS_BASE_URL}/1"  # /1
