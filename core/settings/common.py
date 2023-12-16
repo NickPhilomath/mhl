@@ -59,7 +59,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     "corsheaders.middleware.CorsMiddleware",
     "django.middleware.security.SecurityMiddleware",
-    'whitenoise.middleware.WhiteNoiseMiddleware',
+    "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
@@ -121,7 +121,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 STATIC_URL = "static/"
 # STATIC_ROOT = os.path.join(BASE_DIR, "static")
-STATICFILES_DIRS = [os.path.join(BASE_DIR,'static')]
+STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
 
 # Default primary key field type
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
@@ -162,7 +162,8 @@ SIMPLE_JWT = {
 # debug toolbar settings
 INTERNAL_IPS = ["127.0.0.1"]
 
-REDIS_BASE_URL = 'redis://redis:6379'
+# REDIS_BASE_URL = 'redis://redis:6379'
+REDIS_BASE_URL = "redis://localhost:6379"
 
 # # celery settings
 CELERY_BROKER_URL = f"{REDIS_BASE_URL}/1"  # /1
